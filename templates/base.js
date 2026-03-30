@@ -10,9 +10,9 @@
  * @see {@link https://github.com/sponsors/tomaschochola} GitHub Sponsors
  */
 
-import { PostcssStack } from '@premierstacks/postcss-stack';
+import { Postcss } from '@tomaschochola/tooling-postcss';
 
 // eslint-disable-next-line no-restricted-exports
-export default new PostcssStack()
+export default new Postcss()
   .env()
   .build();

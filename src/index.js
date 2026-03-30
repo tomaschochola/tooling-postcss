@@ -14,7 +14,7 @@ export const selectors = {
   srcEcmaScript: ['./src/**/*.{tsx,mts,ts,cts,jsx,mjs,js,cjs}'],
 };
 
-export class PostcssStack {
+export class Postcss {
   config;
 
   constructor() {
