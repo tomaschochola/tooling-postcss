@@ -6,7 +6,7 @@
   },
   "bugs": {
     "email": "tomaschochola@tomaschochola.cz",
-    "url": "https://github.com/tomaschochola/tooling-TODO/issues"
+    "url": "https://github.com/tomaschochola/tooling-postcss/issues"
   },
   "contributors": [
     {
@@ -15,8 +15,11 @@
       "url": "https://github.com/tomaschochola"
     }
   ],
-  "dependencies": {},
-  "description": "@tomaschochola/tooling-TODO",
+  "dependencies": {
+    "postcss": "^8.5.8",
+    "postcss-preset-env": "^11.2.0"
+  },
+  "description": "@tomaschochola/tooling-postcss",
   "devDependencies": {
     "@tomaschochola/eslint-stack": "github:tomaschochola/eslint-stack#1.x",
     "@tomaschochola/prettier-stack": "github:tomaschochola/prettier-stack#1.x"
@@ -25,18 +28,18 @@
     "type": "github",
     "url": "https://github.com/sponsors/tomaschochola"
   },
-  "homepage": "https://github.com/tomaschochola/tooling-TODO",
+  "homepage": "https://github.com/tomaschochola/tooling-postcss",
   "keywords": [
     "tomaschochola",
     "TomasChochola",
     "Tomas Chochola",
     "Tomáš Chochola",
-    "tooling-TODO"
+    "tooling-postcss"
   ],
   "license": "CC-BY-ND-4.0",
   "main": "./src/index.js",
-  "name": "@tomaschochola/tooling-TODO",
-  "repository": "github:tomaschochola/tooling-TODO",
+  "name": "@tomaschochola/tooling-postcss",
+  "repository": "github:tomaschochola/tooling-postcss",
   "sideEffects": false,
   "type": "module"
 }
