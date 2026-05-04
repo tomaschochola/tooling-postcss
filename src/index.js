@@ -14,7 +14,7 @@ export const selectors = {
   srcEcmaScript: ['./src/**/*.{tsx,mts,ts,cts,jsx,mjs,js,cjs}'],
 };
 
-export class Postcss {
+export class PostCSS {
   config;
 
   constructor() {
@@ -27,14 +27,14 @@ export class Postcss {
     return process.env.NODE_ENV;
   }
 
-  replace(config) {
+  replaceConfig(config) {
     this.config = { ...config };
 
     return this;
   }
 
-  env(options = {}) {
-    return this.replace({
+  presetEnv(options = {}) {
+    return this.replaceConfig({
       ...this.config,
       plugins: [
         ...this.config.plugins,
@@ -43,7 +43,7 @@ export class Postcss {
     });
   }
 
-  build() {
+  buildConfig() {
     return { ...this.config };
   }
 }
