@@ -10,9 +10,9 @@
  * @see {@link https://github.com/sponsors/tomaschochola} GitHub Sponsors
  */
 
-import { PostCSS } from '@tomaschochola/tooling-postcss';
+import { PostCSSConfigBuilder } from '@tomaschochola/tooling-postcss';
 
 // eslint-disable-next-line no-restricted-exports
-export default new PostCSS()
-  .presetEnv()
-  .buildConfig();
+export default new PostCSSConfigBuilder()
+  .addPresetEnvPlugin()
+  .toConfig();

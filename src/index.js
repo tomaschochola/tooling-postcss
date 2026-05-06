@@ -10,40 +10,37 @@
  * @see {@link https://github.com/sponsors/tomaschochola} GitHub Sponsors
  */
 
-export const selectors = {
-  srcEcmaScript: ['./src/**/*.{tsx,mts,ts,cts,jsx,mjs,js,cjs}'],
-};
+const namedPluginName = (plugin) => (Array.isArray(plugin) ? plugin[0] : plugin);
 
-export class PostCSS {
-  config;
+export class PostCSSConfigBuilder {
+  #config;
 
   constructor() {
-    this.config = {
+    this.#config = {
       plugins: [],
     };
   }
 
-  get NODE_ENV() {
-    return process.env.NODE_ENV;
-  }
-
-  replaceConfig(config) {
-    this.config = { ...config };
+  #replaceConfig(config) {
+    this.#config = { ...config };
 
     return this;
   }
 
-  presetEnv(options = {}) {
-    return this.replaceConfig({
-      ...this.config,
+  addPresetEnvPlugin(options = {}) {
+    return this.#replaceConfig({
+      ...this.#config,
       plugins: [
-        ...this.config.plugins,
+        ...this.#config.plugins.filter((plugin) => namedPluginName(plugin) !== 'postcss-preset-env'),
         ['postcss-preset-env', { ...options }],
       ],
     });
   }
 
-  buildConfig() {
-    return { ...this.config };
+  toConfig() {
+    return {
+      ...this.#config,
+      plugins: [...this.#config.plugins],
+    };
   }
 }
