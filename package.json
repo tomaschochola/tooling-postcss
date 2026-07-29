@@ -16,13 +16,17 @@
     }
   ],
   "dependencies": {
-    "postcss": "^8.5.8",
-    "postcss-preset-env": "^11.2.0"
+    "postcss": "^8.5.24",
+    "postcss-preset-env": "^11.3.2"
   },
   "description": "@tomaschochola/tooling-postcss",
   "devDependencies": {
     "@tomaschochola/tooling-eslint": "github:tomaschochola/tooling-eslint#1.x",
     "@tomaschochola/tooling-prettier": "github:tomaschochola/tooling-prettier#1.x"
+  },
+  "engines": {
+    "node": ">=24.11.0 <25.0.0",
+    "npm": ">=11.0.0 <12.0.0"
   },
   "funding": {
     "type": "github",
@@ -39,6 +43,7 @@
   "license": "CC-BY-ND-4.0",
   "main": "./src/index.js",
   "name": "@tomaschochola/tooling-postcss",
+  "packageManager": "npm@11.16.0",
   "repository": "github:tomaschochola/tooling-postcss",
   "sideEffects": false,
   "type": "module"
