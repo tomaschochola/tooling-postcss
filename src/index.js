@@ -10,7 +10,9 @@
  * @see {@link https://github.com/sponsors/tomaschochola} GitHub Sponsors
  */
 
-const namedPluginName = (plugin) => (Array.isArray(plugin) ? plugin[0] : plugin);
+import postcssPresetEnv from 'postcss-preset-env';
+
+const pluginFactory = ([factory]) => factory;
 
 export class PostCSSConfigBuilder {
   #config;
@@ -28,19 +30,21 @@ export class PostCSSConfigBuilder {
   }
 
   addPresetEnvPlugin(options = {}) {
+    const plugin = [postcssPresetEnv, { ...options }];
+    const existingIndex = this.#config.plugins.findIndex((item) => pluginFactory(item) === postcssPresetEnv);
+
     return this.#replaceConfig({
       ...this.#config,
-      plugins: [
-        ...this.#config.plugins.filter((plugin) => namedPluginName(plugin) !== 'postcss-preset-env'),
-        ['postcss-preset-env', { ...options }],
-      ],
+      plugins: existingIndex === -1
+        ? [...this.#config.plugins, plugin]
+        : this.#config.plugins.map((item, index) => (index === existingIndex ? plugin : item)),
     });
   }
 
   toConfig() {
     return {
       ...this.#config,
-      plugins: [...this.#config.plugins],
+      plugins: this.#config.plugins.map(([factory, options]) => factory({ ...options })),
     };
   }
 }

@@ -16,15 +16,22 @@
     }
   ],
   "dependencies": {
-    "postcss": "^8.5.24",
+    "postcss": "^8.5.25",
     "postcss-preset-env": "^11.3.2"
   },
-  "description": "@tomaschochola/tooling-postcss",
+  "description": "Shared PostCSS configuration builder and templates.",
   "devDependencies": {
-    "@tomaschochola/tooling-eslint": "github:tomaschochola/tooling-eslint#1.x",
-    "@tomaschochola/tooling-prettier": "github:tomaschochola/tooling-prettier#1.x",
+    "@tomaschochola/tooling-eslint": "github:tomaschochola/tooling-eslint#2.x",
+    "@tomaschochola/tooling-prettier": "github:tomaschochola/tooling-prettier#2.x",
     "@tomaschochola/tooling-trimmer": "github:tomaschochola/tooling-trimmer#2.x"
   },
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "templates"
+  ],
   "funding": {
     "type": "github",
     "url": "https://github.com/sponsors/tomaschochola"
@@ -35,13 +42,21 @@
     "TomasChochola",
     "Tomas Chochola",
     "Tomáš Chochola",
-    "tooling-postcss"
+    "configuration",
+    "css",
+    "postcss",
+    "postcss-preset-env",
+    "tooling-postcss",
+    "transformation"
   ],
   "license": "CC-BY-ND-4.0",
   "main": "./src/index.js",
   "name": "@tomaschochola/tooling-postcss",
-  "repository": "github:tomaschochola/tooling-postcss",
-  "sideEffects": false,
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomaschochola/tooling-postcss.git"
+  },
   "type": "module",
   "version": "2.0.0"
 }
