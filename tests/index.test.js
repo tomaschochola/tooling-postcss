@@ -22,9 +22,7 @@ test('empty builder exposes an empty plugin pipeline', () => {
 });
 
 test('repeated preset additions update options without duplicating the plugin', async () => {
-  const builder = new PostCSSConfigBuilder()
-    .addPresetEnvPlugin({ browsers: 'ie 11' })
-    .addPresetEnvPlugin({ browsers: 'chrome 136' });
+  const builder = new PostCSSConfigBuilder().addPresetEnvPlugin({ browsers: 'ie 11' }).addPresetEnvPlugin({ browsers: 'chrome 136' });
 
   const config = builder.toConfig();
   const freshConfig = builder.toConfig();
@@ -39,15 +37,9 @@ test('repeated preset additions update options without duplicating the plugin', 
 });
 
 test('preset options control transformations through the complete PostCSS pipeline', async () => {
-  const modern = await processCss(
-    new PostCSSConfigBuilder().addPresetEnvPlugin({ browsers: 'chrome 136' }),
-    '.item { user-select: none; }',
-  );
+  const modern = await processCss(new PostCSSConfigBuilder().addPresetEnvPlugin({ browsers: 'chrome 136' }), '.item { user-select: none; }');
 
-  const legacy = await processCss(
-    new PostCSSConfigBuilder().addPresetEnvPlugin({ browsers: 'ie 11' }),
-    '.item { user-select: none; }',
-  );
+  const legacy = await processCss(new PostCSSConfigBuilder().addPresetEnvPlugin({ browsers: 'ie 11' }), '.item { user-select: none; }');
 
   assert.doesNotMatch(modern.css, /-ms-user-select/u);
   assert.match(legacy.css, /-ms-user-select/u);

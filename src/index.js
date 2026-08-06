@@ -35,9 +35,7 @@ export class PostCSSConfigBuilder {
 
     return this.#replaceConfig({
       ...this.#config,
-      plugins: existingIndex === -1
-        ? [...this.#config.plugins, plugin]
-        : this.#config.plugins.map((item, index) => (index === existingIndex ? plugin : item)),
+      plugins: existingIndex === -1 ? [...this.#config.plugins, plugin] : this.#config.plugins.map((item, index) => (index === existingIndex ? plugin : item)),
     });
   }
 
