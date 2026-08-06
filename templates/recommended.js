@@ -12,7 +12,6 @@
 
 import { PostCSSConfigBuilder } from '@tomaschochola/tooling-postcss';
 
-// eslint-disable-next-line no-restricted-exports
 export default new PostCSSConfigBuilder()
   .addPresetEnvPlugin()
   .toConfig();
