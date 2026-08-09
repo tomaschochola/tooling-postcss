@@ -46,7 +46,7 @@ test('preset options control transformations through the complete PostCSS pipeli
 });
 
 test('copy template resolves to an executable PostCSS configuration', async () => {
-  const { default: config } = await import('../templates/recommended.js?test=recommended');
+  const { default: config } = await import('../templates/recommended.js');
   const result = await postcss(config.plugins).process('.item { &:hover { color: red; } }', { from: undefined });
 
   assert.equal(config.plugins.length, 1);
