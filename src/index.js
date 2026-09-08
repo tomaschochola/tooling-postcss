@@ -12,7 +12,31 @@
 
 import postcssPresetEnv from 'postcss-preset-env';
 
+const presetEnvDefaults = Object.freeze({
+    enableClientSidePolyfills: false,
+    minimumVendorImplementations: 2,
+    stage: false,
+});
+
 const pluginFactory = ([factory]) => factory;
+
+function isPlainObject(value) {
+    if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+        return false;
+    }
+
+    const prototype = Object.getPrototypeOf(value);
+
+    return prototype === Object.prototype || prototype === null;
+}
+
+function normalizeOptions(options) {
+    if (!isPlainObject(options)) {
+        throw new TypeError('options must be a plain object.');
+    }
+
+    return { ...options };
+}
 
 export class PostCSSConfigBuilder {
     #config;
@@ -30,12 +54,25 @@ export class PostCSSConfigBuilder {
     }
 
     addPresetEnvPlugin(options = {}) {
-        const plugin = [postcssPresetEnv, { ...options }];
+        const plugin = [
+            postcssPresetEnv,
+            {
+                ...presetEnvDefaults,
+                ...normalizeOptions(options),
+            },
+        ];
         const existingIndex = this.#config.plugins.findIndex((item) => pluginFactory(item) === postcssPresetEnv);
+        const plugins = [...this.#config.plugins];
+
+        if (existingIndex === -1) {
+            plugins.push(plugin);
+        } else {
+            plugins[existingIndex] = plugin;
+        }
 
         return this.#replaceConfig({
             ...this.#config,
-            plugins: existingIndex === -1 ? [...this.#config.plugins, plugin] : this.#config.plugins.map((item, index) => (index === existingIndex ? plugin : item)),
+            plugins,
         });
     }
 

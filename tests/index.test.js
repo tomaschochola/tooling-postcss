@@ -21,6 +21,20 @@ test('empty builder exposes an empty plugin pipeline', () => {
     assert.deepEqual(new PostCSSConfigBuilder().toConfig(), { plugins: [] });
 });
 
+test('preset options must be plain objects', () => {
+    for (const options of [null, [], 'invalid', new Date(0)]) {
+        assert.throws(() => new PostCSSConfigBuilder().addPresetEnvPlugin(options), {
+            message: 'options must be a plain object.',
+            name: 'TypeError',
+        });
+    }
+
+    const options = Object.create(null);
+    options.stage = false;
+
+    assert.equal(new PostCSSConfigBuilder().addPresetEnvPlugin(options).toConfig().plugins.length, 1);
+});
+
 test('repeated preset additions update options without duplicating the plugin', async () => {
     const builder = new PostCSSConfigBuilder().addPresetEnvPlugin({ browsers: 'ie 11' }).addPresetEnvPlugin({ browsers: 'chrome 136' });
 
@@ -36,19 +50,42 @@ test('repeated preset additions update options without duplicating the plugin', 
     assert.equal(result.css, '.item { user-select: none; }');
 });
 
-test('preset options control transformations through the complete PostCSS pipeline', async () => {
-    const modern = await processCss(new PostCSSConfigBuilder().addPresetEnvPlugin({ browsers: 'chrome 136' }), '.item { user-select: none; }');
-
+test('default pipeline preserves portable CSS and applies required vendor prefixes', async () => {
+    const portableCss = '.item { &:hover { color: oklch(from red l c h); } }';
+    const portable = await processCss(new PostCSSConfigBuilder().addPresetEnvPlugin(), portableCss);
     const legacy = await processCss(new PostCSSConfigBuilder().addPresetEnvPlugin({ browsers: 'ie 11' }), '.item { user-select: none; }');
 
-    assert.doesNotMatch(modern.css, /-ms-user-select/u);
+    assert.equal(portable.css, portableCss);
     assert.match(legacy.css, /-ms-user-select/u);
+    assert.equal(portable.warnings().length, 0);
+    assert.equal(legacy.warnings().length, 0);
 });
 
-test('copy template resolves to an executable PostCSS configuration', async () => {
-    const { default: config } = await import('../templates/recommended.js');
-    const result = await postcss(config.plugins).process('.item { &:hover { color: red; } }', { from: undefined });
+test('stable future CSS transformations require explicit opt-in', async () => {
+    const options = { stage: 2 };
+    const builder = new PostCSSConfigBuilder().addPresetEnvPlugin(options);
+    options.stage = false;
+
+    const result = await processCss(builder, '.item { &:hover { color: red; } }');
+
+    assert.match(result.css, /\.item:hover/u);
+    assert.equal(result.warnings().length, 0);
+});
+
+test('client-side polyfill transformations remain disabled by default', async () => {
+    const css = '.item:has(.child) { color: red; }';
+    const result = await processCss(new PostCSSConfigBuilder().addPresetEnvPlugin({ browsers: 'ie 11', stage: 2 }), css);
+
+    assert.equal(result.css, css);
+    assert.equal(result.warnings().length, 0);
+});
+
+test('copy template resolves to a safe executable PostCSS configuration', async () => {
+    const { default: config } = await import('../templates/browser_bundler.js');
+    const css = '.item { &:hover { color: red; } }';
+    const result = await postcss(config.plugins).process(css, { from: undefined });
 
     assert.equal(config.plugins.length, 1);
-    assert.match(result.css, /\.item:hover/u);
+    assert.equal(result.css, css);
+    assert.equal(result.warnings().length, 0);
 });
