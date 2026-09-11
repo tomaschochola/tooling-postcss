@@ -80,8 +80,8 @@ test('client-side polyfill transformations remain disabled by default', async ()
     assert.equal(result.warnings().length, 0);
 });
 
-test('copy template resolves to a safe executable PostCSS configuration', async () => {
-    const { default: config } = await import('../templates/browser_bundler.js');
+test('copy scaffold resolves to a safe executable PostCSS configuration', async () => {
+    const { default: config } = await import('../scaffolds/browser_bundler.js');
     const css = '.item { &:hover { color: red; } }';
     const result = await postcss(config.plugins).process(css, { from: undefined });
 

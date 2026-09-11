@@ -19,7 +19,7 @@
         "postcss": "^8.5.28",
         "postcss-preset-env": "^11.5.2"
     },
-    "description": "Shared PostCSS configuration builder and templates.",
+    "description": "Shared PostCSS configuration builder and scaffolds.",
     "devDependencies": {
         "@tomaschochola/tooling-eslint": "git+https://github.com/tomaschochola/tooling-eslint.git#main",
         "@tomaschochola/tooling-prettier": "git+https://github.com/tomaschochola/tooling-prettier.git#main",
@@ -30,7 +30,7 @@
     },
     "files": [
         "src",
-        "templates"
+        "scaffolds"
     ],
     "funding": {
         "type": "github",
