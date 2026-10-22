@@ -42,12 +42,7 @@
         "TomasChochola",
         "Tomas Chochola",
         "Tomáš Chochola",
-        "configuration",
-        "css",
-        "postcss",
-        "postcss-preset-env",
-        "tooling-postcss",
-        "transformation"
+        "tooling-postcss"
     ],
     "license": "CC-BY-ND-4.0",
     "main": "./src/index.js",
