@@ -16,8 +16,8 @@
         }
     ],
     "dependencies": {
-        "postcss": "^8.5.28",
-        "postcss-preset-env": "^11.5.2"
+        "postcss": "^8.5.32",
+        "postcss-preset-env": "^11.6.2"
     },
     "description": "Shared PostCSS configuration builder and scaffolds.",
     "devDependencies": {
